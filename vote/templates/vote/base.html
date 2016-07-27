@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block js %}
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.js"></script>
+    {% endblock %}
+    <meta charset="UTF-8">
+    <title>MailMyVote.Com - {% block title %}Vote naked!{% endblock %}</title>
+</head>
+<body>
+    <div>
+        {% block body_block %}{% endblock %}
+    </div>
+
+    <div>
+        <ul>
+            <li><a href="{% url 'index' %}">Home</a> </li>
+            <li><a href="#">About</a> </li>
+            {% if user.is_authenticated %}
+                <li><a href="{% url 'logout' %}">Logout</a> </li>
+            {% else %}
+                <li><a href="{% url 'register' %}">Register</a> </li>
+                <li><a href="{% url 'login' %}">Login</a> </li>
+            {% endif %}
+        </ul>
+    </div>
+</body>
+</html>

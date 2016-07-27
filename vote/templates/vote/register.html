@@ -1,0 +1,19 @@
+{% extends 'vote/base.html' %}
+
+{% load staticfiles %}
+
+{% block title %} Register! {% endblock %}
+
+{% block body_block %}
+    {% if registered %}
+        <h1>Thanks for registering!</h1>
+    {% else %}
+        <h1>{{ state_long }} Registration</h1>
+        <form id="user_form" method="post" action="{% url 'register_state' state_id %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ user_form.as_p }}
+            {{ profile_form.as_p }}
+            <input type="submit" name="submit" value="Register"/>
+        </form>
+    {% endif %}
+{% endblock %}

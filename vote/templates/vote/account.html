@@ -1,0 +1,22 @@
+{% extends 'vote/base.html' %}
+
+{% load staticfiles %}
+
+{% block body_block %}
+    {% if user.is_authenticated %}
+        <h1>Hello {{ user.username }}!</h1>
+    {% else %}
+        <h1>Hello stranger! How'd you get here?</h1>
+        {% if states %}
+            <h2>Get started by selecting your state.</h2>
+            <form id="get_state" method="post" action="{% url 'index' %}">
+                {% csrf_token %}
+                <select name="state_select">
+                    {% for key, value in states %}
+                        <option value="{{ key }}">{{ value }}</option>
+                    {% endfor %}
+                </select>
+            </form>
+        {% endif %}
+    {% endif %}
+{% endblock %}
