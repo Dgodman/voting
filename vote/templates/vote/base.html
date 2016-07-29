@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+{% load staticfiles %}
 <head>
+    <link rel="icon" type="image/png" href="{% static 'vote/images/favicon.ico' %}"/>
     {% block js %}
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.js"></script>
     {% endblock %}
