@@ -13,7 +13,7 @@ class UserForm(forms.ModelForm):
 
 
 class ProfileForm(forms.ModelForm):
-    state_home = forms.CharField(widget=forms.Select(choices=us_states), max_length=2, disabled=True)
+    state_home = forms.CharField(widget=forms.Select(choices=us_states), max_length=2, disabled=True, required=False)
 
     class Meta:
         model = UserInfo

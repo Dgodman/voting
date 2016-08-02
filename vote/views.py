@@ -32,10 +32,6 @@ def register(request, state_id=""):
 
     # get state data
     state_data = us_states_dict[state_id]
-    context_dict = {'state_id': state_id,
-                    'state_long': state_data['name_long'],
-                    'absentee_type': state_data['absentee_type'],
-                    }
 
     # form stuff
     if request.method == 'POST':
@@ -56,21 +52,25 @@ def register(request, state_id=""):
             profile = profile_form.save(commit=False)
             profile.user = user
 
-
-            # registration successful
+            # successful
             registered = True
         else:
             print user_form.errors
+            print profile_form.errors
     else:
         # start user form
         user_form = UserForm()
         # start profile form and set state_id
         profile_form = ProfileForm(initial={'state_home': state_id})
-        # add forms to context
-        context_dict['user_form'] = user_form
-        context_dict['profile_form'] = profile_form
 
-    context_dict['registered'] = registered
+    # build context dict
+    context_dict = {'state_id': state_id,
+                    'state_long': state_data['name_long'],
+                    'absentee_type': state_data['absentee_type'],
+                    'registered': registered,
+                    'user_form': user_form,
+                    'profile_form': profile_form,
+    }
     # render template
     return render(request, 'vote/register.html', context_dict)
 
