@@ -14,6 +14,14 @@ def index(request):
 
 
 @login_required
+def user_logout(request):
+    # log user out
+    logout(request)
+    # return to home
+    return HttpResponseRedirect('/vote/')
+
+
+@login_required
 def account(request):
     return render(request, 'vote/account.html', {})
 
@@ -113,11 +121,3 @@ def user_login(request):
 
 def user_auth(request):
     return request.user.is_authenticated()
-
-
-@login_required
-def user_logout(request):
-    # log user out
-    logout(request)
-    # return to home
-    return HttpResponseRedirect('/vote/')
