@@ -281,7 +281,7 @@ us_territories = (
     ('PR', 'Puerto Rico'),
     ('VI', 'Virgin Islands'),
 )
-ENCODE_KEY = 'c$#5bo6i#fvq+z(c_6_-7&zf=yo5lvwj*3+((a+-6@+d#vwm5_'
+ENCODE_KEY = 'd$#sbo61#fvq+z(c_6_-7&zf=yo51vwj*3+((a+-6@+d#vwm5_'
 
 
 def get_absentee(state_id):
@@ -302,7 +302,7 @@ def fillcolor(state_id):
         return "gray"
 
 
-def states_fill_json ():
+def states_fill_json():
     state_fill = {}
     for state_id in us_states_dict:
         state_fill[state_id] = {'fill': fillcolor(get_absentee(state_id))}
@@ -310,7 +310,8 @@ def states_fill_json ():
         json.dump(state_fill, outfile)
 
 
-def encode(key, clear):
+def encode(clear):
+    key = ENCODE_KEY
     enc = []
     for i in range(len(clear)):
         key_c = key[i % len(key)]
@@ -319,7 +320,8 @@ def encode(key, clear):
     return base64.urlsafe_b64encode("".join(enc).encode('utf-8'))
 
 
-def decode(key, enc):
+def decode(enc):
+    key = ENCODE_KEY
     dec = []
     enc = base64.urlsafe_b64decode(enc)
     enc = enc.decode('utf-8')
@@ -328,3 +330,18 @@ def decode(key, enc):
         dec_c = unichr((256 + ord(enc[i]) - ord(key_c)) % 256)
         dec.append(dec_c)
     return "".join(dec)
+
+
+def encode_test(max_range):
+    # fake last 4 digits of ssn
+    for num in range(1, max_range):
+        # convert to string
+        ssn = str(num)
+        # prepend zeros
+        for num_zeros in range(4 - len(ssn)):
+            ssn = "0" + ssn
+        # encode
+        encoded_ssn = encode(ssn)
+        # decode
+        decoded_ssn = decode(encoded_ssn)
+        print "%s : %s : %s" % (ssn, encoded_ssn, decoded_ssn)

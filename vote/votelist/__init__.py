@@ -7,3 +7,4 @@ from votelist import us_parties
 from votelist import states_fill_json
 from votelist import encode
 from votelist import decode
+from votelist import encode_test
